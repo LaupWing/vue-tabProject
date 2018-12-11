@@ -15,8 +15,8 @@ Vue.component('quick-acces', Quick);
 Vue.use(VueRouter);
 // Routers are made Here
 const routes = [
-  {path: '/dailyplanner', component: Daily},
   {path: '/to-do-list', component: ToDo},
+  {path: '/dailyplanner', component: Daily},
   {path: '/projects', component: Projects},
   {path: '/function-steps', component: Steps},
   {path: '/timer', component: Timer}
