@@ -2,13 +2,14 @@
   <div class="flex" id="app">
     <quick-acces>
     </quick-acces>
+    <h2 @click="activeTab">test</h2>
     <main>
       <nav>
           <!-- <router-link class="nav-item" to='/dailyplanner'>Daily Planner</router-link>
           <router-link class="nav-item" to='/to-do-list'>To Do List</router-link>
           <router-link class="nav-item" to='/projects'>Projects</router-link>
           <router-link class="nav-item" to='/function-steps'>Steps</router-link> -->
-          <router-link v-for="router in routers" class="nav-item" :to="router.link" :style="{background: router.color}">{{router.label}}</router-link>
+          <router-link v-for="(router, index) in routers" class="nav-item" :to="router.link" :style="{background: router.color}" @click.native="activeTab(router)" v-bind:key="index">{{router.label}}</router-link>
       </nav>
       <router-view>
       </router-view>
@@ -47,20 +48,14 @@ export default {
           label: "Timer",
           color: "#8FC33A"
         }
-        // "F53240",
-        // "F9BE02",
-        // "02C8A7",
-        // "2E302C"
       ]
     }
   },
-  methods:{
-    // navItemWidth: function(){
-      // console.log("test1")
-      // const navItem = document.querySelectorAll(".nav-item");
-      // console.log("test2")
-      // console.log(`3 ${navItem}`)
-    // }
+  methods: {
+    activeTab: function(categorie){
+      console.log("test")
+      console.log(categorie, "test")
+    }
   }
 }
 
@@ -75,23 +70,18 @@ function onloadFunctions(){
 
 function applyWidth(width){
   const widthItem = 100/width;
-  console.log(widthItem)
   const navItem = document.querySelectorAll(".nav-item");
   navItem.forEach(function(item){
     item.style.width = `${widthItem}%`
-    console.log(item)
+    item.style.marginLeft = `-${widthItem/2}px`
   })
+  navItem[0].style.marginLeft = 0;
 }
 
 function applyOffset(height){
-  console.log(height, 'testing out')
   document.querySelector("nav").style.transform = `translate(0, -${height}px)`
   document.querySelector("main").style.marginTop = `${height*2}px`
 }
-
-
-// document.querySelector("main").style
-
 
 </script>
 
@@ -129,11 +119,11 @@ main{
   height: 400px;
   background: white;
   box-shadow: 10px 10px 29px -8px rgba(0,0,0,0.43);
+  border-radius: 0 0 10px 10px;
 }
 nav{
   display: flex;
   width: 100%;
-  background: white;
 }
 .nav-item{
   text-decoration: none;
@@ -143,7 +133,11 @@ nav{
   color: white;
   background: orange;
   font-weight: 550;
+  border-radius: 20px 5px 0 0;
 }
 
-
+.activeTab{
+  z-index: 2;
+  width: 30%;
+}
 </style>
