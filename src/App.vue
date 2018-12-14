@@ -2,11 +2,11 @@
   <div class="flex" id="app">
     <quick-acces>
     </quick-acces>
-    <main>
-      <nav>
-          <router-link v-for="(router, index) in routers" class="nav-item" :to="router.link" :style="{background: router.color}" v-bind:key="index">{{router.label}}</router-link>
-      </nav>
-      <router-view class="router-view">
+    <nav>
+      <router-link v-for="(router, index) in routers" class="nav-item" :to="{name:router.name, params: {routerColor}}" :style="{background: router.color}" @click.native="changeBorderColor(router.color)" v-bind:key="index">{{router.label}}</router-link>
+    </nav>
+    <main :style="{border: currentBorder}">
+      <router-view :color="routerColor" class="router-view">
       </router-view>
     </main>
   </div>
@@ -19,61 +19,78 @@ export default {
     return {
       routers: [
         {
+          name: 'ToDo',
           link: '/to-do-list',
           label: "To do list",
           color: "#F9BE02"
         },
         {
+          name: 'Daily',
           link: '/dailyplanner',
           label: "Daily Planner",
           color: "#F53240"
         },
         {
+          name: 'Projects',
           link: '/projects',
           label: "Projects",
           color: "#02C8A7"
         },
         {
+          name: 'Steps',
           link: '/function-steps',
           label: "Steps",
           color: "#2E302C"
         },
         {
+          name: 'Timer',
           link: '/timer',
           label: "Timer",
           color: "#8FC33A"
+        },
+        {
+          name: 'Test',
+          link: '/test',
+          label: "Test",
+          color: "orange"
         }
       ],
+      routerColor: "rgba(0,0,0,0.6)",
+      msg: "test",
       openTab: this.routers,
+      currentBorder: ""
     }
   },
   methods: {
-
+    changeBorderColor: function(color){
+      this.routerColor = color
+      this.currentBorder = "4px solid " + color
+    },
+    onloadFunctions: function(){
+      const navItem = document.querySelectorAll(".nav-item");
+      // Hieronder word de border gezet na het laden van alle items op de webapp
+      // dit is niet volgens de vue manier dus dit moet nog gerefactored worden
+      // NOTE: Needs refactoring
+      navItem.forEach(function(item){
+        if(item.classList.contains("router-link-active")){
+          document.querySelector("main").style.border = "2px solid "+ item.style.background
+        }
+      })
+      this.applyWidth(navItem.length)
+    },
+    applyWidth: function(width){
+      const widthItem = 100/width;
+      const navItem = document.querySelectorAll(".nav-item");
+      navItem.forEach(function(item){
+        item.style.width = `${widthItem+(widthItem/10)}%`
+        item.style.marginLeft = `-${widthItem/2}px`
+      })
+      navItem[0].style.marginLeft = 0;
+    }
+  },
+  mounted(){
+    this.onloadFunctions();
   }
-}
-
-window.onload = onloadFunctions
-
-function onloadFunctions(){
-  const navItem = document.querySelectorAll(".nav-item");
-  applyWidth(navItem.length)
-  const heightItem = document.querySelector(".nav-item").offsetHeight
-  applyOffset(heightItem)
-}
-
-function applyWidth(width){
-  const widthItem = 100/width;
-  const navItem = document.querySelectorAll(".nav-item");
-  navItem.forEach(function(item){
-    item.style.width = `${widthItem+(widthItem/10)}%`
-    item.style.marginLeft = `-${widthItem/2}px`
-  })
-  navItem[0].style.marginLeft = 0;
-}
-
-function applyOffset(height){
-  document.querySelector("nav").style.transform = `translate(0, -${height}px)`
-  document.querySelector("main").style.marginTop = `${height*2}px`
 }
 
 </script>
@@ -113,8 +130,10 @@ main{
   background: white;
   box-shadow: 10px 10px 29px -8px rgba(0,0,0,0.43);
   border-radius: 0 0 10px 10px;
+  padding: 40px;
 }
 nav{
+  margin-top: 40px;
   display: flex;
   width: 100%;
 }
@@ -137,6 +156,15 @@ nav{
 .router-view{
   width: 80%;
   margin: auto;
+}
+button{
+  font-family: 'Text Me One', sans-serif !important;\
+  font-weight: 800 !important;
+  background: transparent;
+  border: black solid 1px;
+  font-size: 14px;
+  padding: 6px;
+  width: 20%;
 }
 
 h2{
