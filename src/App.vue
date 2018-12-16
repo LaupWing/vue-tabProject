@@ -58,7 +58,7 @@ export default {
       routerColor: "rgba(0,0,0,0.6)",
       msg: "test",
       openTab: this.routers,
-      currentBorder: ""
+      currentBorder: "",
     }
   },
   methods: {
@@ -86,10 +86,25 @@ export default {
         item.style.marginLeft = `-${widthItem/2}px`
       })
       navItem[0].style.marginLeft = 0;
+    },
+    startingColor(){
+      let currentColor;
+      const currentRoute = this.$route.path
+      this.routers.forEach(function(route){
+        if(currentRoute === route.link){
+          currentColor = route.color
+        }
+      })
+      this.routerColor = currentColor;
     }
   },
   mounted(){
     this.onloadFunctions();
+  },
+  created(){
+    this.startingColor()
+    // console.log(this.test())
+    // console.log(this.routers)
   }
 }
 
@@ -131,6 +146,7 @@ main{
   box-shadow: 10px 10px 29px -8px rgba(0,0,0,0.43);
   border-radius: 0 0 10px 10px;
   padding: 40px;
+  transition: .3s;
 }
 nav{
   margin-top: 40px;
