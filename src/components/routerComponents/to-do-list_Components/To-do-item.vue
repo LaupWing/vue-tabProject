@@ -1,13 +1,23 @@
 <template lang="html">
-  <div class="container">
+  <div v-bind:class="['container', (dum.done === true) ? 'disable' : '']">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
       <div class="to-do-item" v-show="!isEditing">
-        <div @click="completeTodo(dum)" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave" class="complete-btn">
-          <i :style="[hover ? {'color': 'white'} : {'color': 'rgba(0,0,0,0.7)'}]" class="fas fa-check"></i>
+
+        <div v-show="!dum.done" @click="completeTodo(dum)" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave" class="complete-btn hoverOn cursorPointer">
+          <i :style="[hover ? {'color': 'white'} : {'color': 'rgba(0,0,0,0.7)'}]" class="fas fa-check cursorPointer"></i>
         </div>
-        <div class="to-do-content">
+
+        <div v-show="dum.done" class="complete-btn">
+          <i class="fas fa-check  disableFont"></i>
+        </div>
+
+        <div v-show="!dum.done" class="to-do-content">
           {{dum.value}}
         </div>
+        <div v-show="dum.done" class="to-do-content disableFont">
+          {{dum.value}}
+        </div>
+
       </div>
       <div class="editMode" v-show="isEditing">
         <input class="editInput" type="text" v-model="dum.value">
@@ -16,9 +26,14 @@
         </div>
       </div>
 
-      <div class="buttons">
-        <i @click="showEdit" class="fas fa-edit"></i>
-        <i @click="deleteTodo(dum)" class="fas fa-trash"></i>
+      <div v-show="!dum.done" class="buttons">
+        <i @click="showEdit" class="fas fa-edit cursorPointer"></i>
+        <i @click="deleteTodo(dum)" class="fas fa-trash cursorPointer"></i>
+      </div>
+
+      <div v-show="dum.done" class="buttons">
+        <i class="fas fa-edit cursorPointer disableFont"></i>
+        <i class="fas fa-trash cursorPointer disableFont"></i>
       </div>
 
   </div>
@@ -31,7 +46,7 @@ export default {
   data(){
     return{
       isEditing: false,
-      hover: false
+      hover: false,
     }
   },
   methods:{
@@ -42,6 +57,7 @@ export default {
       this.isEditing = false;
     },
     handleMouseleave(){
+      console.log(this.dum.done)
       this.hover = false
     },
     handleMouseenter(){
@@ -65,7 +81,18 @@ export default {
   align-items: center;
   margin: 5px 0px;
   border: 1px rgba(0,0,0,.2) solid;
+  transition: .25s;
 }
+
+.disable{
+  background: rgba(0,0,0,0.1);
+}
+
+.disableFont{
+  color: rgba(0,0,0,0.1);
+}
+
+
 .to-do-item{
   display: flex;
 }
@@ -82,9 +109,11 @@ export default {
   align-items: center;
   border: 1px rgba(0,0,0,.2) solid;
   transition: .25s;
+}
+.cursorPointer{
   cursor: pointer;
 }
-.complete-btn:hover{
+.hoverOn:hover{
   background: rgba(0,0,0,0.7);
 }
 .editMode{
@@ -113,8 +142,8 @@ export default {
 }
 i{
   font-size: 20px;
-  cursor: pointer;
-  color: rgba(0,0,0,0.7)
+  color: rgba(0,0,0,0.7);
+  transition: .25s;
 }
 
 </style>
