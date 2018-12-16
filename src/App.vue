@@ -64,7 +64,7 @@ export default {
   methods: {
     changeBorderColor: function(color){
       this.routerColor = color
-      this.currentBorder = "4px solid " + color
+      this.currentBorder = "3px solid " + color
     },
     onloadFunctions: function(){
       const navItem = document.querySelectorAll(".nav-item");
@@ -73,7 +73,7 @@ export default {
       // NOTE: Needs refactoring
       navItem.forEach(function(item){
         if(item.classList.contains("router-link-active")){
-          document.querySelector("main").style.border = "2px solid "+ item.style.background
+          document.querySelector("main").style.border = "3px solid "+ item.style.background
         }
       })
       this.applyWidth(navItem.length)
@@ -103,8 +103,6 @@ export default {
   },
   created(){
     this.startingColor()
-    // console.log(this.test())
-    // console.log(this.routers)
   }
 }
 

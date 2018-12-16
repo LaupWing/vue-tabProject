@@ -8,6 +8,10 @@
       <div class="linktitle">Pinterest</div>
       <img src="../assets/pinterest-logo.png" alt="">
     </a>
+    <a class="flex" href="https://github.com/">
+      <div class="linktitle">Github</div>
+      <img src="../assets/github-logo.png" alt="">
+    </a>
   </header>
 </template>
 <script>
