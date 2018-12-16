@@ -1,30 +1,14 @@
 <template>
 <div class="todo">
-  <header :style="{background: color}">
+  <header  @click="handleEvents" :style="{background: color}">
     <h2>To-do-list</h2>
     <div class="">
-      <p class="todo-info">Completed Tasks: {{dummyData.filter(todo => {return todo.done === true}).length}}</p>
-      <p class="todo-info">Pending Tasks: {{dummyData.filter(todo => {return todo.done === false}).length}}</p>
+      <p class="todo-info">Completed Tasks: {{itemData.filter(todo => {return todo.done === true}).length}}</p>
+      <p class="todo-info">Pending Tasks: {{itemData.filter(todo => {return todo.done === false}).length}}</p>
     </div>
   </header>
 
-  <to-do-list v-on:create-todo="createTodo" :color="color" :dummy="dummyData"></to-do-list>
-
-  <!-- <form id="itemForm">
-    <input id="itemInput" type="text" name="" placeholder="wat wil ik doen vandaag?">
-    <button @click="addItem" name="button" class="btn-add">Voeg mission toe</button>
-  </form>
-  <div class="itemList">
-    <div class="item" v-for="item in itemData">
-      {{item}}
-      <div class="">
-        <i @click="editItem" class="far fa-edit"></i>
-        <i @click="finishedItem" class="fas fa-check-square"></i>
-        <i @click="handleEvents('delete')" class="fas fa-trash"></i>
-      </div>
-    </div>
-  </div>
-  <button type="button" class="btn-clear">CLEAR</button> -->
+  <to-do-list v-on:resetItemData="resetItemData" v-on:create-todo="createTodo" :color="color" :itemData="itemData"></to-do-list>
 </div>
 </template>
 
@@ -39,84 +23,23 @@ export default {
   },
   data() {
     return {
-      itemData: [],
-      dummyData: [{
-        value: 'Todo A',
-        // project: 'Project A',
-        done: false,
-      }, {
-        value: 'Todo B',
-        // project: 'Project B',
-        done: true,
-      }, {
-        value: 'Todo C',
-        // project: 'Project C',
-        done: false,
-      }, {
-        value: 'Todo D',
-        // project: 'Project D',
-        done: false,
-      }],
+      itemData: JSON.parse(localStorage.getItem("to-do-list")) || [],
     }
   },
   methods: {
     createTodo(newTodo){
-      console.log(newTodo, "createtodo")
-      this.dummyData.push(newTodo);
-    },
-    addItem: function(event) {
-      event.preventDefault()
-      const itemInput = document.querySelector("#itemInput")
-      const textValue = itemInput.value
-      itemInput.value = ""
-      this.itemData.push(textValue)
-    },
-    editItem: function() {
-
-    },
-    finishedItem: function() {
-
-    },
-    deleteItem: function(item) {
-      const itemList = document.querySelector(".itemList")
-      const items = itemList.querySelectorAll(".item")
-      const clickedItem = event.currentTarget.parentNode.parentNode
-      const clickedItemValue = event.target.parentNode.parentNode.textContent.trim()
-      console.log("halo")
-      // const itemList = document.querySelector(".itemList")
-      // const items = itemList.querySelectorAll(".item");
-      // const clickedItem = event.currentTarget.parentNode.parentNode
-      // const clickedItemValue = event.target.parentNode.parentNode.textContent.trim()
-      // // console.log(clickedItem)
-      // console.log(value)
-      // items.forEach(function(item){
-      //   console.log(item)
-      //   if(item.textContent.trim()==clickedItemValue){
-      //     console.log(item, "this one")
-      //     console.log(value)
-      //   }
-      // })
-      // this.itemData = this.itemData.filter(function(item) {
-      //       return item !== clickedItemValue
-      //     })
-      // console.log(this.itemData)
-      // itemList.removeChild(clickedItem)
+      this.itemData.push(newTodo);
+      localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
     },
     handleEvents: function(action) {
-      // const itemList = document.querySelector(".itemList")
-      // const items = itemList.querySelectorAll(".item");
-      // const clickedItem = event.currentTarget.parentNode.parentNode
-      // const clickedItemValue = event.target.parentNode.parentNode.textContent.trim()
-      // console.log(clickedItem)
-      this.items.forEach(function(item) {
-        console.log(item)
-        if (item.textContent.trim() == this.clickedItemValue) {
-          // console.log(item, "this one")
-          // itemList.removeChild(item)
-        }
-      })
-    }
-  }
+      console.log(this.itemData)
+    },
+    resetItemData: function(){
+      this.itemData = []
+      console.log(this.itemData)
+      localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
+     }
+  },
 
 }
 </script>

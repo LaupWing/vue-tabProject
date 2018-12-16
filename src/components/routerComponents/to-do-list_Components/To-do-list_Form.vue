@@ -4,7 +4,7 @@
       <input v-model="value" id="itemInput" type="text" name="" placeholder="wat wil ik doen vandaag?">
       <button @click="addToDo" class="btn-add">Voeg mission toe</button>
     </form>
-    <todo v-on:complete-todo="completeTodo" v-on:delete-todo="deleteTodo" v-for="dum in dummy" :dum="dum" :color="color"> </todo>
+    <todo v-on:complete-todo="completeTodo" v-on:delete-todo="deleteTodo" v-for="item in itemData" :item="item" :color="color"> </todo>
 
   </div>
 </template>
@@ -12,7 +12,7 @@
 <script>
 import Todo from './To-do-item'
 export default {
-  props:['dummy', 'color'],
+  props:['itemData', 'color'],
   components:{
     Todo,
   },
@@ -22,30 +22,43 @@ export default {
     }
   },
   methods:{
-    deleteTodo(dum){
-      console.log(dum)
-      const todoIndex = this.dummy.indexOf(dum);
-      this.dummy.splice(todoIndex, 1);
+    deleteTodo(item){
+      console.log(item)
+      const todoIndex = this.itemData.indexOf(item);
+      this.itemData.splice(todoIndex, 1);
+      console.log(this.itemData)
+      localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
     },
     addToDo(event){
       event.preventDefault();
       console.log(this.value)
       if(this.value.length >0){
-        console.log("yes")
         const value = this.value;
         this.$emit('create-todo',{
           value,
           done:false,
         })
         this.value = '';
+        localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
       }
     },
-    completeTodo(dum) {
-      console.log(dum)
-      const todoIndex = this.dummy.indexOf(dum);
-      this.dummy[todoIndex].done = true;
-      console.log(this.dummy)
+    completeTodo(item) {
+      console.log(item)
+      const todoIndex = this.itemData.indexOf(item);
+      this.itemData[todoIndex].done = true;
+      if(this.itemData.every(this.checkComplete)){
+        this.$emit('resetItemData')
+      }else{
+        let done = 0;
+        this.itemData.forEach(function(item){if(item.done === true){done++}})
+        console.log(done)
+      }
+      // console.log("checking ",this.itemData.every(this.checkComplete))
+      localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
     },
+    checkComplete(item){
+      return item.done === true;
+    }
   }
 }
 </script>

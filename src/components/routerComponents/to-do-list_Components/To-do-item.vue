@@ -1,37 +1,37 @@
 <template lang="html">
-  <div v-bind:class="['container', (dum.done === true) ? 'disable' : '']">
+  <div v-bind:class="['container', (item.done === true) ? 'disable' : '']">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
       <div class="to-do-item" v-show="!isEditing">
 
-        <div v-show="!dum.done" @click="completeTodo(dum)" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave" class="complete-btn hoverOn cursorPointer">
+        <div v-show="!item.done" @click="completeTodo(item)" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave" class="complete-btn hoverOn cursorPointer">
           <i :style="[hover ? {'color': 'white'} : {'color': 'rgba(0,0,0,0.7)'}]" class="fas fa-check cursorPointer"></i>
         </div>
 
-        <div v-show="dum.done" class="complete-btn">
+        <div v-show="item.done" class="complete-btn">
           <i class="fas fa-check  disableFont"></i>
         </div>
 
-        <div v-show="!dum.done" class="to-do-content">
-          {{dum.value}}
+        <div v-show="!item.done" class="to-do-content">
+          {{item.value}}
         </div>
-        <div v-show="dum.done" class="to-do-content disableFont">
-          {{dum.value}}
+        <div v-show="item.done" class="to-do-content disableFont">
+          {{item.value}}
         </div>
 
       </div>
       <div class="editMode" v-show="isEditing">
-        <input class="editInput" type="text" v-model="dum.value">
+        <input class="editInput" type="text" v-model="item.value">
         <div @click="hideEdit" class="change">
           change
         </div>
       </div>
 
-      <div v-show="!dum.done" class="buttons">
+      <div v-show="!item.done" class="buttons">
         <i @click="showEdit" class="fas fa-edit cursorPointer"></i>
-        <i @click="deleteTodo(dum)" class="fas fa-trash cursorPointer"></i>
+        <i @click="deleteTodo(item)" class="fas fa-trash cursorPointer"></i>
       </div>
 
-      <div v-show="dum.done" class="buttons">
+      <div v-show="item.done" class="buttons">
         <i class="fas fa-edit cursorPointer disableFont"></i>
         <i class="fas fa-trash cursorPointer disableFont"></i>
       </div>
@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  props: ['dum'],
+  props: ['item'],
   data(){
     return{
       isEditing: false,
@@ -57,17 +57,17 @@ export default {
       this.isEditing = false;
     },
     handleMouseleave(){
-      console.log(this.dum.done)
+      console.log(this.item.done)
       this.hover = false
     },
     handleMouseenter(){
       this.hover = true
     },
-    deleteTodo(dum){
-      this.$emit('delete-todo', dum)
+    deleteTodo(item){
+      this.$emit('delete-todo', item)
     },
-    completeTodo(dum){
-      this.$emit('complete-todo', dum)
+    completeTodo(item){
+      this.$emit('complete-todo', item)
     }
   }
 }
