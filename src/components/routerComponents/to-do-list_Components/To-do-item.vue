@@ -54,6 +54,7 @@ export default {
       this.isEditing = true;
     },
     hideEdit(){
+      this.editTodo(this.item)
       this.isEditing = false;
     },
     handleMouseleave(){
@@ -68,6 +69,9 @@ export default {
     },
     completeTodo(item){
       this.$emit('complete-todo', item)
+    },
+    editTodo(item){
+      this.$emit('edit-todo', item)
     }
   }
 }

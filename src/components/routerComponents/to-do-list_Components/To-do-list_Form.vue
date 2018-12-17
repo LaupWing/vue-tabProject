@@ -4,7 +4,7 @@
       <input v-model="value" id="itemInput" type="text" name="" placeholder="wat wil ik doen vandaag?">
       <button @click="addToDo" class="btn-add">Voeg mission toe</button>
     </form>
-    <todo v-on:complete-todo="completeTodo" v-on:delete-todo="deleteTodo" v-for="item in itemData" :item="item" :color="color"> </todo>
+    <todo v-on:complete-todo="completeTodo" v-on:edit-todo="editTodo" v-on:delete-todo="deleteTodo" v-for="item in itemData" :item="item" :color="color"> </todo>
 
   </div>
 </template>
@@ -27,6 +27,12 @@ export default {
       const todoIndex = this.itemData.indexOf(item);
       this.itemData.splice(todoIndex, 1);
       console.log(this.itemData)
+      localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
+    },
+    editTodo(item){
+      const todoIndex = this.itemData.indexOf(item);
+      // console.log(item.value)
+      this.itemData[todoIndex].value = item.value;
       localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
     },
     addToDo(event){

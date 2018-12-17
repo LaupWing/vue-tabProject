@@ -32,12 +32,17 @@ export default {
       localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
     },
     handleEvents: function(action) {
-      console.log(this.itemData)
-    },
-    resetItemData: function(){
-      this.itemData = []
+      this.itemData.shift()
       console.log(this.itemData)
       localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
+    },
+    resetItemData: function(){
+      // this.itemData = []
+      while(this.itemData.length > 0) {
+        this.itemData.pop();
+      }
+      localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
+      console.log(this.itemData)
      }
   },
 
