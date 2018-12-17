@@ -19,11 +19,17 @@ export default {
       projects:[
         {
         projectname: "Project A",
-        tasks:["A", "B", "C"]
+        tasks:[
+          {value:"A"},
+          {value:"B"}, 
+          {value:"C"}]
         },
         {
         projectname: "Project B",
-        tasks:["A1", "B1", "C1"]
+        tasks:[
+          {value:"A1"}, 
+          {value:"B1"}, 
+          {value:"C1"}]
         },
       ]
     }
