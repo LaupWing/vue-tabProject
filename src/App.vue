@@ -1,5 +1,6 @@
 <template>
   <div class="flex" id="app">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <quick-acces>
     </quick-acces>
     <nav>
@@ -9,6 +10,9 @@
       <router-view :color="routerColor" class="router-view">
       </router-view>
     </main>
+    <footer>
+      <p>Made by Laup Wing</p>
+    </footer>
   </div>
 </template>
 
@@ -110,6 +114,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Text+Me+One');
+@import url('https://fonts.googleapis.com/css?family=Grand+Hotel');
 html {
   box-sizing: border-box;
 }
@@ -126,6 +131,7 @@ html {
   width: 80%;
   flex-direction: column;
   justify-content: space-around;
+  margin-top: 70px;
 }
 body{
   width: 100vw;
@@ -134,12 +140,12 @@ body{
   background: #7CDBD5;
   font-family: 'Text Me One', sans-serif;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 main{
   width: 100%;
-  height: 400px;
+  min-height: 300px;
   background: white;
   box-shadow: 10px 10px 29px -8px rgba(0,0,0,0.43);
   border-radius: 0 0 10px 10px;
@@ -183,5 +189,13 @@ button{
 
 h2{
   margin: 0;
+}
+footer{
+  font-family: 'Grand Hotel', cursive;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  font-size: 22px;
 }
 </style>

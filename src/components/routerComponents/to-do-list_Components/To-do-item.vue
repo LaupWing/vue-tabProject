@@ -1,6 +1,5 @@
 <template lang="html">
   <div v-bind:class="['container', (item.done === true) ? 'disable' : '']">
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
       <div class="to-do-item" v-show="!isEditing">
 
         <div v-show="!item.done" @click="completeTodo(item)" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave" class="complete-btn hoverOn cursorPointer">

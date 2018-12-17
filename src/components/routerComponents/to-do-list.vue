@@ -1,6 +1,6 @@
 <template>
 <div class="todo">
-  <header  @click="handleEvents" :style="{background: color}">
+  <header :style="{background: color}">
     <h2>To-do-list</h2>
     <div class="">
       <p class="todo-info">Completed Tasks: {{itemData.filter(todo => {return todo.done === true}).length}}</p>
