@@ -75,6 +75,15 @@ export default {
   display: block;
 }
 
+.btn-add{
+  outline: none;
+  transition: .25s;
+  cursor: pointer;
+}
+.btn-add:hover{
+  background: black;
+  color: white;
+}
 #itemForm {
   width: 100%;
   display: flex;
