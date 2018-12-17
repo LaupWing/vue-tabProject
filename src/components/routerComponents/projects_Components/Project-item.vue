@@ -1,12 +1,14 @@
 <template lang="html">
   <div class="project-item">
+
+    <!-- Stil needs some cleaning here -->
     <header v-if="!edit" :class="{roundedBorders : show === true}" :style="{background: color}">
       <i @click="removeProject(project)" class="fas fa-trash"></i>
       <h3>
         {{project.projectname}}
       </h3>
       <div class="buttons">
-        <i @click="turnOnEdit" v-if="show" class="fas fa-edit enable"></i>
+        <i @click="toggleEdit" v-if="show" class="fas fa-edit enable"></i>
         <i v-if="!show" class="fas fa-edit disable"></i>
         <i v-bind:class="['far fa-arrow-alt-circle-down', (show === false) ? 'rotate' : '']" @click="showTasks"></i>
       </div>
@@ -17,7 +19,7 @@
       <h3>
         <input type="text" name="" v-model="project.projectname">
       </h3>
-        <i class="fas fa-check-square"></i>
+        <i @click="editProject" class="fas fa-check-square"></i>
     </header>
 
     <div v-if="!edit" class="tasks-container">
@@ -34,13 +36,15 @@
     </div>
 
     <div v-if="edit" class="tasks-container">
-      <div class="task" v-for="(task, index) in project.tasks">
-        <p :style="{color: color}" class="indexTask">
-          {{index}}
-        </p>
-        <p class="taskContent">
-          <input type="text" v-model="task.value">
-        </p>
+      <div v-bind:class="['tasks', (show === false) ? 'hide' : '']">
+        <div class="task" v-for="(task, index) in project.tasks">
+          <p :style="{color: color}" class="indexTask">
+            {{index}}
+          </p>
+          <p class="taskContent">
+            <input type="text" v-model="task.value">
+          </p>
+        </div>
       </div>
     </div>
 
@@ -61,12 +65,16 @@ export default {
     showTasks() {
       this.show = !this.show
     },
-    removeProject(project){
+    removeProject(project) {
       this.$emit('delete-project', project)
     },
-    turnOnEdit(){
+    toggleEdit() {
       this.edit = !this.edit
     },
+    editProject() {
+      console.log(this.project)
+      this.toggleEdit()
+    }
   }
 }
 </script>
