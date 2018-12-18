@@ -32,7 +32,7 @@
 
     <div v-if="!edit" class="tasks-container">
     <div v-bind:class="['tasks', (show === false) ? 'hide' : '']">
-      <div @click="test(task.done)" class="task" v-for="(task, index) in project.tasks">
+      <div @click="test(task.done)" class="task" v-for="(task, index) in project.tasks" v-show="task.done">
         <p :style="{color: color}" class="indexTask">
           {{index}}
         </p>
@@ -47,22 +47,12 @@
     <div v-if="edit" class="tasks-container">
       <div v-bind:class="['tasks', (show === false) ? 'hide' : '']">
         <div class="task" v-for="(task, index) in project.tasks">
-          <div v-show="task.done === false" class="completed">
-            <p :style="{color: color}" class="indexTask">
-              {{index}}
-            </p>
-            <p class="taskContent">
-              <input type="text" v-model="task.value">
-            </p>
-          </div>
-          <!-- <div class="not-completed">
-            <p :style="{color: color}" class="indexTask">
-              {{index}}
-            </p>
-            <p class="taskContent">
-              <input type="text" v-model="task.value">
-            </p>
-          </div> -->
+          <p :style="{color: color}" class="indexTask">
+            {{index}}
+          </p>
+          <p class="taskContent">
+            <input type="text" v-model="task.value">
+          </p>
         </div>
       </div>
     </div>
