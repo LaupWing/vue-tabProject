@@ -32,7 +32,7 @@
 
     <div v-if="!edit" class="tasks-container">
     <div v-bind:class="['tasks', (show === false) ? 'hide' : '']">
-      <div @click="test(task.done)" class="task" v-for="(task, index) in project.tasks" v-show="task.done">
+      <div v-for="(task, index) in project.tasks" v-bind:class="['task', (task.done === true) ? 'completed' : '']">
         <p :style="{color: color}" class="indexTask">
           {{index}}
         </p>
@@ -41,6 +41,7 @@
         </p>
         <i @click="completeTask" class="fas fa-check"></i>
       </div>
+
     </div>
     </div>
 
@@ -232,6 +233,11 @@ input:hover, input:focus{
   align-items: center;
   /* background: rgba(0,0,0,.1); */
   position: relative;
+}
+
+.completed{
+  background: rgba(0,0,0,.2);
+  opacity: .3;
 }
 
 .tasks-container{
