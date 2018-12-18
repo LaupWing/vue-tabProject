@@ -3,14 +3,22 @@
 
     <!-- Stil needs some cleaning here -->
     <header v-if="!edit" :class="{roundedBorders : show === true}" :style="{background: color}">
-      <i @click="removeProject(project)" class="fas fa-trash"></i>
-      <h3>
-        {{project.projectname}}
-      </h3>
-      <div class="buttons">
-        <i @click="toggleEdit" v-if="show" class="fas fa-edit enable"></i>
-        <i v-if="!show" class="fas fa-edit disable"></i>
-        <i v-bind:class="['far fa-arrow-alt-circle-down', (show === false) ? 'rotate' : '']" @click="showTasks"></i>
+      <div class="upperheader">
+        <i @click="removeProject(project)" class="fas fa-trash"></i>
+        <h3>
+          {{project.projectname}}
+        </h3>
+        <div class="buttons">
+          <i @click="toggleEdit" v-if="show" class="fas fa-edit enable"></i>
+          <i v-if="!show" class="fas fa-edit disable"></i>
+          <i v-bind:class="['far fa-arrow-alt-circle-down', (show === false) ? 'rotate' : '']" @click="showTasks"></i>
+        </div>
+      </div>
+      <div v-bind:class="['lowerheader', (show === false) ? 'hidden' : '']">
+        <div class="progressBar">
+          <div class="progress">
+          </div>
+        </div>
       </div>
     </header>
 
@@ -24,13 +32,14 @@
 
     <div v-if="!edit" class="tasks-container">
     <div v-bind:class="['tasks', (show === false) ? 'hide' : '']">
-      <div class="task" v-for="(task, index) in project.tasks">
+      <div @click="test(task.done)" class="task" v-for="(task, index) in project.tasks">
         <p :style="{color: color}" class="indexTask">
           {{index}}
         </p>
         <p class="taskContent">
           {{task.value}}
         </p>
+        <i @click="completeTask" class="fas fa-check"></i>
       </div>
     </div>
     </div>
@@ -38,12 +47,22 @@
     <div v-if="edit" class="tasks-container">
       <div v-bind:class="['tasks', (show === false) ? 'hide' : '']">
         <div class="task" v-for="(task, index) in project.tasks">
-          <p :style="{color: color}" class="indexTask">
-            {{index}}
-          </p>
-          <p class="taskContent">
-            <input type="text" v-model="task.value">
-          </p>
+          <div v-show="task.done === false" class="completed">
+            <p :style="{color: color}" class="indexTask">
+              {{index}}
+            </p>
+            <p class="taskContent">
+              <input type="text" v-model="task.value">
+            </p>
+          </div>
+          <!-- <div class="not-completed">
+            <p :style="{color: color}" class="indexTask">
+              {{index}}
+            </p>
+            <p class="taskContent">
+              <input type="text" v-model="task.value">
+            </p>
+          </div> -->
         </div>
       </div>
     </div>
@@ -74,7 +93,32 @@ export default {
     editProject() {
       console.log(this.project)
       this.toggleEdit()
+    },
+    progression(){
+      const progress = this.$el.querySelector('.progress')
+      const max = this.project.tasks.length
+      let done=0;
+      this.project.tasks.forEach(function(task){
+        if(task.done===true){
+          done++
+        }
+      })
+      let sum = this.calculatePercentage(max,done)
+      progress.style.width = `${sum}%`
+    },
+    calculatePercentage(max, done){
+      let sum = (done/max)*100
+      return sum
+    },
+    completeTask(){
+
+    },
+    test(task){
+      console.log(task)
     }
+  },
+  mounted(){
+    this.progression()
   }
 }
 </script>
@@ -118,10 +162,21 @@ header{
   padding: 15px;
   color: white;
   transition: all .25s;
+  position: relative;
+}
+.upperheader{
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+}
+.lowerheader{
+  max-height: 50px;
+  transition: 1s;
+  overflow: hidden;
+}
+.hidden{
+  max-height: 0;
 }
 .buttons{
   display: flex;
@@ -149,6 +204,16 @@ header{
   transition: .25s;
   cursor: pointer;
 }
+.fa-check{
+  position: absolute;
+  right: 10px;
+  color: rgba(0,0,0,.3);
+  cursor: pointer;
+  transition: .25s;
+}
+.fa-check:hover{
+  color: rgba(0,0,0,1)
+}
 input:hover, input:focus{
   background: white;
   /* border: rgba(0,0,0,.1) solid 1px; */
@@ -171,12 +236,14 @@ input:hover, input:focus{
 }
 .task{
   border-bottom: solid rgba(0,0,0,.2) 1px;
+  border-right: solid rgba(0,0,0,.2) 1px;
   display: flex;
   color: rgba(0,0,0,.7);
   align-items: center;
-  background: rgba(0,0,0,.1);
-
+  /* background: rgba(0,0,0,.1); */
+  position: relative;
 }
+
 .tasks-container{
   overflow: hidden;
 }
@@ -199,7 +266,18 @@ input:hover, input:focus{
   margin-left: 20px;
 }
 .task:last-of-type{
-  border: none;
+  /* border: none; */
+}
+.progressBar{
+  width: 200px;
+  height: 20px;
+  background: white;
+  margin: auto;
+}
+.progress{
+  background: orange;
+  height: 100%;
+  width: 20%;
 }
 h3{
   margin: 0;

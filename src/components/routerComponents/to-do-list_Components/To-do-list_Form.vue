@@ -4,7 +4,9 @@
       <input v-model="value" id="itemInput" type="text" name="" placeholder="wat wil ik doen vandaag?">
       <button @click="addToDo" class="btn-add">Voeg mission toe</button>
     </form>
+    <div class="list">
     <todo v-on:complete-todo="completeTodo" v-on:edit-todo="editTodo" v-on:delete-todo="deleteTodo" v-for="item in itemData" :item="item" :color="color"> </todo>
+  </div>
 
   </div>
 </template>
@@ -73,6 +75,12 @@ export default {
 .btn-clear {
   margin: 20px auto;
   display: block;
+}
+.list{
+  /* background: orange; */
+  max-height: 290px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .btn-add{

@@ -131,7 +131,7 @@ html {
   width: 80%;
   flex-direction: column;
   justify-content: space-around;
-  margin-top: 70px;
+  margin-top: 40px;
 }
 body{
   width: 100vw;
@@ -142,6 +142,7 @@ body{
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  overflow-x: hidden;
 }
 main{
   width: 100%;
@@ -150,7 +151,9 @@ main{
   box-shadow: 10px 10px 29px -8px rgba(0,0,0,0.43);
   border-radius: 0 0 10px 10px;
   padding: 40px;
+  padding-top: 25px;
   transition: .3s;
+  max-height: 470px;
 }
 nav{
   margin-top: 40px;
@@ -198,4 +201,31 @@ footer{
   right: 20px;
   font-size: 22px;
 }
+
+/* Scroll styling */
+/* From W3 schools */
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: lightgrey;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.2);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+
 </style>

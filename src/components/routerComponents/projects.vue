@@ -20,16 +20,34 @@ export default {
         {
         projectname: "Project A",
         tasks:[
-          {value:"A"},
-          {value:"B"}, 
-          {value:"C"}]
+          {
+            value:"A",
+            done: false
+          },
+          {
+            value:"B",
+            done: true
+          },
+          {
+            value:"C",
+            done: true
+          }]
         },
         {
         projectname: "Project B",
         tasks:[
-          {value:"A1"}, 
-          {value:"B1"}, 
-          {value:"C1"}]
+          {
+            value:"A1",
+            done: false
+          },
+          {
+            value:"B1",
+            done: true
+          },
+          {
+            value:"C1",
+            done: false
+          }]
         },
       ]
     }
