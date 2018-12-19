@@ -3,6 +3,8 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <quick-acces>
     </quick-acces>
+    <div class="main-content">
+
     <nav>
       <router-link v-for="(router, index) in routers" class="nav-item" :to="{name:router.name, params: {routerColor}}" :style="{background: router.color}" @click.native="changeBorderColor(router.color)" v-bind:key="index">{{router.label}}</router-link>
     </nav>
@@ -10,6 +12,7 @@
       <router-view :color="routerColor" class="router-view">
       </router-view>
     </main>
+  </div>
     <footer>
       <p>Made by Laup Wing</p>
     </footer>
@@ -144,6 +147,11 @@ body{
   justify-content: center;
   overflow-x: hidden;
 }
+
+.main-content{
+  width: 100%;
+}
+
 main{
   width: 100%;
   min-height: 300px;
@@ -156,6 +164,7 @@ main{
   /* max-height: 470px; */
   max-height: 80vh;
 }
+
 nav{
   margin-top: 40px;
   display: flex;
@@ -178,7 +187,7 @@ nav{
 }
 
 .router-view{
-  width: 80%;
+  width: 85%;
   margin: auto;
 }
 button{
@@ -189,7 +198,15 @@ button{
   font-size: 14px;
   padding: 6px;
   width: 20%;
+  cursor: pointer;
+  transition: .25s;
+  outline: none;
 }
+button:hover{
+  background: black;
+  color: white;
+}
+
 
 h2{
   margin: 0;

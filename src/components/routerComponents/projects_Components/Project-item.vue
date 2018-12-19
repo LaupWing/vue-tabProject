@@ -56,6 +56,10 @@
           </p>
         </div>
       </div>
+      <div class="addTaskContainer">
+        <input v-model="newTask" type="text" name="" value="">
+        <button @click="addTask" class="addTask" type="button" name="button">Add New Task</button>
+      </div>
     </div>
 
 
@@ -69,6 +73,7 @@ export default {
     return {
       show: false,
       edit: false,
+      newTask: ""
     }
   },
   methods: {
@@ -110,6 +115,19 @@ export default {
     },
     test(task){
       console.log(task)
+    },
+    addTask(){
+      if(this.newTask.length >0){
+        console.log(this.project.tasks)
+        this.project.tasks.push(
+          {
+          value:this.newTask,
+          done:false
+          })
+        this.newTask = ""
+      }else{
+        console.log("ne")
+      }
     }
   },
   mounted(){
@@ -179,6 +197,28 @@ header{
   align-items: center;
   width: 10%;
   justify-content: space-between;
+}
+
+.addTaskContainer{
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.addTaskContainer input{
+  /* background: orange; */
+  border: rgba(0,0,0,.35) solid 1px;
+  border-right: none;
+  height: 31px;
+}
+.addTask{
+  /* margin: 10px auto; */
+  /* display: block; */
+  border-radius:0 5px 5px 0;
+  border-color: rgba(0,0,0,.2)
+}
+.addTask:hover{
+  background: rgba(0,0,0,.5)
 }
 .fa-arrow-alt-circle-down, .fa-edit, .fa-check-square{
   font-size: 25px;

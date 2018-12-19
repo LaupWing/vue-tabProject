@@ -79,7 +79,7 @@ export default {
 }
 .list{
   /* background: orange; */
-  max-height: 290px;
+  max-height: 45vh;
   overflow: auto;
   overflow-x: hidden;
 }

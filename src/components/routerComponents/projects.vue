@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="projects">
-    <h2 @click="test">Projects</h2>
+    <h2>Projects</h2>
     <div class="projects-container">
 
     <project-list :projects="projects" :color="color"></project-list>
-    <i class="far fa-plus-square"></i>
-    <create-project v-bind:color="color"></create-project>
+    <i @click="addNewProject" v-show="!addNew" class="far fa-plus-square"></i>
+    <create-project v-show="addNew" v-on:hide-add="hideAdd" v-on:add-project="addProject" v-bind:color="color"></create-project>
   </div>
   </div>
 </template>
@@ -55,12 +55,19 @@ export default {
             done: false
           }]
         },
-      ]
+      ],
+      addNew: false,
     }
   },
   methods:{
-    test(){
-      console.log(this.projects)
+    addProject(project){
+      this.projects.push(project)
+    },
+    addNewProject(){
+      this.addNew = true;
+    },
+    hideAdd(){
+      this.addNew = false;
     }
   }
 }
@@ -83,7 +90,7 @@ export default {
 }
 .projects-container{
   /* background: yellow; */
-  max-height: 330px;
+  max-height: 55vh;
   overflow: auto;
   overflow-x: hidden;
 }

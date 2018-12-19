@@ -15,8 +15,6 @@ export default {
   methods:{
     deleteProject(project){
       const projectIndex = this.projects.indexOf(project);
-      console.log(project)
-      console.log(projectIndex)
       this.projects.splice(projectIndex, 1);
     },
   }
@@ -24,4 +22,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.container{
+  margin: 0 10px;
+}
 </style>
