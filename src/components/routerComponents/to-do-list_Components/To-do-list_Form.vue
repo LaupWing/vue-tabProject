@@ -103,4 +103,19 @@ export default {
   padding: 10px;
   font-size: 16px;
 }
+@media only screen and (max-height: 900px) {
+  .list {
+    max-height: 40vh;
+  }
+}
+@media only screen and (max-height: 810px) {
+  .list {
+    max-height: 35vh;
+  }
+}
+@media only screen and (max-height: 740px) {
+  .list {
+    max-height: 30vh;
+  }
+}
 </style>

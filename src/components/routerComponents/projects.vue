@@ -94,4 +94,20 @@ export default {
   overflow: auto;
   overflow-x: hidden;
 }
+
+@media only screen and (max-height: 900px) {
+  .projects-container {
+    max-height: 50vh;
+  }
+}
+@media only screen and (max-height: 810px) {
+  .projects-container {
+    max-height: 45vh;
+  }
+}
+@media only screen and (max-height: 740px) {
+  .projects-container {
+    max-height: 40vh;
+  }
+}
 </style>
