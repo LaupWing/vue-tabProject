@@ -23,7 +23,7 @@
     </header>
 
     <header v-if="edit" :class="{roundedBorders : show === true}" :style="{background: color}">
-      <i @click="removeProject(project)" class="fas fa-trash"></i>
+      <!-- <i @click="removeProject(project)" class="fas fa-trash"></i> -->
       <h3>
         <input type="text" name="" v-model="project.projectname">
       </h3>
@@ -39,7 +39,7 @@
         <p class="taskContent">
           {{task.value}}
         </p>
-        <i @click="completeTask" class="fas fa-check"></i>
+        <i @click="completeTask(task)" class="fas fa-check"></i>
       </div>
 
     </div>
@@ -88,6 +88,7 @@ export default {
     progression(){
       const progress = this.$el.querySelector('.progress')
       const max = this.project.tasks.length
+      console.log("go")
       let done=0;
       this.project.tasks.forEach(function(task){
         if(task.done===true){
@@ -101,8 +102,11 @@ export default {
       let sum = (done/max)*100
       return sum
     },
-    completeTask(){
-
+    completeTask(task){
+      const taskIndex = this.project.tasks.indexOf(task);
+      this.project.tasks[taskIndex].done = true;
+      this.$emit('complete-task', task)
+      this.progression()
     },
     test(task){
       console.log(task)
@@ -154,6 +158,7 @@ header{
   color: white;
   transition: all .25s;
   position: relative;
+  /* display: flex; */
 }
 .upperheader{
   width: 100%;
@@ -274,6 +279,7 @@ input:hover, input:focus{
   background: orange;
   height: 100%;
   width: 20%;
+  transition: .25s;
 }
 h3{
   margin: 0;

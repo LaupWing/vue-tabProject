@@ -153,7 +153,8 @@ main{
   padding: 40px;
   padding-top: 25px;
   transition: .3s;
-  max-height: 470px;
+  /* max-height: 470px; */
+  max-height: 80vh;
 }
 nav{
   margin-top: 40px;

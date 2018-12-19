@@ -53,6 +53,7 @@ export default {
     completeTodo(item) {
       console.log(item)
       const todoIndex = this.itemData.indexOf(item);
+      console.log(todoIndex)
       this.itemData[todoIndex].done = true;
       if(this.itemData.every(this.checkComplete)){
         this.$emit('resetItemData')
@@ -79,7 +80,7 @@ export default {
 .list{
   /* background: orange; */
   max-height: 290px;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 }
 

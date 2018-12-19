@@ -1,18 +1,24 @@
 <template lang="html">
   <div class="projects">
     <h2 @click="test">Projects</h2>
+    <div class="projects-container">
+
     <project-list :projects="projects" :color="color"></project-list>
     <i class="far fa-plus-square"></i>
+    <create-project v-bind:color="color"></create-project>
+  </div>
   </div>
 </template>
 
 <script>
 import ProjectList from './projects_Components/Projects-list.vue'
+import CreateProject from './projects_Components/Create-Project.vue'
 export default {
   name: 'Projects',
   props: ['color'],
   components:{
     ProjectList,
+    CreateProject
   },
   data(){
     return{
@@ -26,7 +32,7 @@ export default {
           },
           {
             value:"B",
-            done: true
+            done: false
           },
           {
             value:"C",
@@ -74,5 +80,11 @@ export default {
 }
 .fa-plus-square:hover{
   color: black;
+}
+.projects-container{
+  /* background: yellow; */
+  max-height: 330px;
+  overflow: auto;
+  overflow-x: hidden;
 }
 </style>

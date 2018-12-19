@@ -15,9 +15,10 @@ export default {
   methods:{
     deleteProject(project){
       const projectIndex = this.projects.indexOf(project);
+      console.log(project)
+      console.log(projectIndex)
       this.projects.splice(projectIndex, 1);
-      console.log(this.projects)
-    }
+    },
   }
 }
 </script>
