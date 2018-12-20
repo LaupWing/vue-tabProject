@@ -64,7 +64,8 @@ export default {
       this.hover = true
     },
     deleteTodo(item){
-      this.$emit('delete-todo', item)
+      console.log(this.$el.querySelector('div'))
+      // this.$emit('delete-todo', item)
     },
     completeTodo(item){
       this.$emit('complete-todo', item)

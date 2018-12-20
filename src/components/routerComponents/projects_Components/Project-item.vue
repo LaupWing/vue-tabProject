@@ -4,11 +4,11 @@
     <!-- Stil needs some cleaning here -->
     <header v-if="!edit" :class="{roundedBorders : show === true}" :style="{background: color}">
       <div class="upperheader">
-        <i @click="removeProject(project)" class="fas fa-trash"></i>
         <h3>
           {{project.projectname}}
         </h3>
         <div class="buttons">
+          <i @click="removeProject(project)" v-if="show" class="fas fa-trash"></i>
           <i @click="toggleEdit" v-if="show" class="fas fa-edit enable"></i>
           <i v-if="!show" class="fas fa-edit disable"></i>
           <i v-bind:class="['far fa-arrow-alt-circle-down', (show === false) ? 'rotate' : '']" @click="showTasks"></i>
@@ -22,12 +22,12 @@
       </div>
     </header>
 
-    <header v-if="edit" :class="{roundedBorders : show === true}" :style="{background: color}">
-      <!-- <i @click="removeProject(project)" class="fas fa-trash"></i> -->
+
+    <header v-if="edit" :class="['flex', (show === true) ? 'roundedBorders' : '']" :style="{background: color}">
       <h3>
         <input type="text" name="" v-model="project.projectname">
       </h3>
-        <i @click="editProject" class="fas fa-check-square"></i>
+        <i @click="editProject(project)" class="fas fa-check-square"></i>
     </header>
 
     <div v-if="!edit" class="tasks-container">
@@ -81,13 +81,15 @@ export default {
       this.show = !this.show
     },
     removeProject(project) {
-      this.$emit('delete-project', project)
+      console.log(this.$el.querySelector('.project-item'))
+      // this.$emit('delete-project', project)
     },
     toggleEdit() {
       this.edit = !this.edit
     },
-    editProject() {
+    editProject(project) {
       console.log(this.project)
+      this.$emit('edit-project', project)
       this.toggleEdit()
     },
     progression(){
@@ -108,9 +110,10 @@ export default {
       return sum
     },
     completeTask(task){
+      console.log(task)
       const taskIndex = this.project.tasks.indexOf(task);
       this.project.tasks[taskIndex].done = true;
-      this.$emit('complete-task', task)
+      this.$emit('complete-task')
       this.progression()
     },
     test(task){
@@ -124,6 +127,7 @@ export default {
           value:this.newTask,
           done:false
           })
+        this.$emit('add-task')
         this.newTask = ""
       }else{
         console.log("ne")
@@ -176,7 +180,10 @@ header{
   color: white;
   transition: all .25s;
   position: relative;
-  /* display: flex; */
+}
+.flex{
+  display: flex;
+  justify-content: space-between;
 }
 .upperheader{
   width: 100%;
@@ -195,7 +202,7 @@ header{
 .buttons{
   display: flex;
   align-items: center;
-  width: 10%;
+  width: 17%;
   justify-content: space-between;
 }
 
@@ -233,12 +240,11 @@ header{
   transition: .5s;
 }
 .fa-trash{
-  position: absolute;
-  left: -30px;
   color: rgba(0,0,0,.15);
-  font-size: 20px;
+  font-size: 23px;
   transition: .25s;
   cursor: pointer;
+  margin-right: 10px;
 }
 .fa-check{
   position: absolute;

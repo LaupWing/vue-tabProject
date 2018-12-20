@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="projects">
-    <h2>Projects</h2>
+    <h2 @click="logList">Projects</h2>
     <div class="projects-container">
 
     <project-list :projects="projects" :color="color"></project-list>
@@ -22,52 +22,23 @@ export default {
   },
   data(){
     return{
-      projects:[
-        {
-        projectname: "Project A",
-        tasks:[
-          {
-            value:"A",
-            done: false
-          },
-          {
-            value:"B",
-            done: false
-          },
-          {
-            value:"C",
-            done: true
-          }]
-        },
-        {
-        projectname: "Project B",
-        tasks:[
-          {
-            value:"A1",
-            done: false
-          },
-          {
-            value:"B1",
-            done: true
-          },
-          {
-            value:"C1",
-            done: false
-          }]
-        },
-      ],
+      projects: JSON.parse(localStorage.getItem("projects")) || [],
       addNew: false,
     }
   },
   methods:{
     addProject(project){
       this.projects.push(project)
+      localStorage.setItem("projects", JSON.stringify(this.projects))
     },
     addNewProject(){
       this.addNew = true;
     },
     hideAdd(){
       this.addNew = false;
+    },
+    logList(){
+      console.log(this.projects)
     }
   }
 }
