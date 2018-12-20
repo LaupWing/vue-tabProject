@@ -115,13 +115,13 @@ export default {
   align-items: center;
   margin: 5px 0px;
   border: 1px rgba(0,0,0,.2) solid;
-  transition: .25s;
+  transition: .5s;
 }
 
 .delete{
   border: none;
-  height: 0px;
-  visibility: hidden;
+  /* height: 0px; */
+  opacity: 0;
   overflow: hidden;
 }
 .disable{
