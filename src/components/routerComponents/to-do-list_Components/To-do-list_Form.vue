@@ -34,9 +34,10 @@ export default {
   methods:{
     deleteTodo(item){
       // item.style.height = 0;
-      const todoIndex = this.itemData.indexOf(item);
-      this.itemData.splice(todoIndex, 1);
-      localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
+      console.log(event.target)
+      // const todoIndex = this.itemData.indexOf(item);
+      // this.itemData.splice(todoIndex, 1);
+      // localStorage.setItem("to-do-list", JSON.stringify(this.itemData))
     },
     editTodo(item){
       const todoIndex = this.itemData.indexOf(item);
@@ -57,9 +58,7 @@ export default {
       }
     },
     completeTodo(item) {
-      console.log(item)
       const todoIndex = this.itemData.indexOf(item);
-      console.log(todoIndex)
       this.itemData[todoIndex].done = true;
       if(this.itemData.every(this.checkComplete)){
         this.$emit('resetItemData')
