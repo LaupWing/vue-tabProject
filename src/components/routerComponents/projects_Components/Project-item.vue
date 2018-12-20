@@ -82,7 +82,7 @@ export default {
     },
     removeProject(project) {
       console.log(this.$el.querySelector('.project-item'))
-      // this.$emit('delete-project', project)
+      this.$emit('delete-project', project)
     },
     toggleEdit() {
       this.edit = !this.edit
@@ -132,7 +132,8 @@ export default {
       }else{
         console.log("ne")
       }
-    }
+    },
+
   },
   mounted(){
     this.progression()

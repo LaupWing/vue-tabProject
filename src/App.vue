@@ -76,6 +76,7 @@ export default {
       this.currentBorder = "3px solid " + color
     },
     onloadFunctions: function(){
+      // localStorage.removeItem("to-do-list")
       const navItem = document.querySelectorAll(".nav-item");
       // Hieronder word de border gezet na het laden van alle items op de webapp
       // dit is niet volgens de vue manier dus dit moet nog gerefactored worden

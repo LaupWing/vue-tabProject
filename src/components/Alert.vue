@@ -4,7 +4,7 @@
       <p>Weet u zeker dat u <span :style="{color : color}">{{item}}</span> wilt verwijderen?</p>
       <button @click="answer('No')" type="button" name="button">Nee</button>
       <button @click="answer('Yes')" type="button" name="button">Ja</button>
-      <button @click="toggle" v-show="always" class="altijd" type="button" name="button">Ja Altijd</button>
+      <button @click="toggle" v-if="always" class="altijd" type="button" name="button">Ja Altijd</button>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div v-bind:class="['container', (item.done === true) ? 'disable' : '']">
+  <div v-bind:class="['container', (item.done === true) ? 'disable' : '', (item.remove === true) ? 'delete' : '']">
       <div class="to-do-item" v-show="!isEditing">
 
         <div v-show="!item.done" @click="completeTodo(item)" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave" class="complete-btn hoverOn cursorPointer">
@@ -27,7 +27,7 @@
 
       <div v-show="!item.done" class="buttons">
         <i @click="showEdit" class="fas fa-edit cursorPointer"></i>
-        <i @click="deleteTodo(item)" class="fas fa-trash cursorPointer"></i>
+        <i @click="alertToggle(item)" class="fas fa-trash cursorPointer"></i>
       </div>
 
       <div v-show="item.done" class="buttons">
@@ -35,17 +35,26 @@
         <i class="fas fa-trash cursorPointer disableFont"></i>
       </div>
 
+      <alert v-show="alert" :item="name" :color="color" :always="always" v-on:answer="answer"> </alert>
   </div>
 
 </template>
 
 <script>
+import Alert from '../../Alert'
 export default {
-  props: ['item'],
+  props: ['item', 'color'],
+  components:{
+    Alert
+  },
   data(){
     return{
       isEditing: false,
       hover: false,
+      name: 'To-do-Item',
+      always: true,
+      alert: false,
+      neverShow: false,
     }
   },
   methods:{
@@ -64,6 +73,7 @@ export default {
       this.hover = true
     },
     deleteTodo(item){
+      console.log("word verwijderd")
       this.$emit('delete-todo', item)
     },
     completeTodo(item){
@@ -71,7 +81,28 @@ export default {
     },
     editTodo(item){
       this.$emit('edit-todo', item)
-    }
+    },
+    alertToggle(item){
+      if(!this.neverShow){
+        this.alert = true
+      }else{
+        this.item.remove = true
+        this.deleteTodo(item)
+      }
+    },
+    answer(answer, neverShow){
+      console.log(this.neverShow)
+      this.neverShow = neverShow
+      if(answer === "Yes"){
+        this.item.remove = true
+        setTimeout(()=>{
+          this.deleteTodo(this.item)
+        },300)
+        this.alert = false
+      }else{
+        this.alert = false
+      }
+    },
   }
 }
 </script>
@@ -87,6 +118,12 @@ export default {
   transition: .25s;
 }
 
+.delete{
+  border: none;
+  height: 0px;
+  visibility: hidden;
+  overflow: hidden;
+}
 .disable{
   background: rgba(0,0,0,0.1);
 }
